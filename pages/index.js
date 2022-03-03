@@ -22,7 +22,7 @@ export default function Home() {
 
   const fetchToGetCookie = async () => {
     setIsLoading(true)
-    await fetch(SITE_B, { mode: 'cors', credentials: 'include' })
+    await fetch(`${SITE_B}/api/get-delicious-cookie`, { mode: 'cors', credentials: 'include' })
     setIsFetched(true)
     setIsLoading(false)
     updateCookie()
