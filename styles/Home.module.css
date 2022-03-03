@@ -119,3 +119,8 @@
     flex-direction: column;
   }
 }
+
+.cookie {
+  display: inline-block;
+  margin: 0;
+}

@@ -3,20 +3,30 @@ import { useState } from 'react'
 import styles from '../styles/Home.module.css'
 
 const SITE_B = 'siteb.pango.plus'
+const COOKIE_KEY = 'delicious'
+
+const getDeliciousCookie = () => {
+  return document.cookie.split('; ').find(cookieString => cookieString.includes(COOKIE_KEY))?.split('=')[1]
+}
 
 
 export default function Home() {
   const [isFetched, setIsFetched] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [cookie, setCookie] = useState('')
+
+  const updateCookie = () => {
+    const deliciousCookie = getDeliciousCookie()
+    if(deliciousCookie) setCookie(deliciousCookie)
+  }
 
   const fetchToGetCookie = async () => {
     setIsLoading(true)
     await fetch(SITE_B, { mode: 'cors', credentials: 'include' })
     setIsFetched(true)
     setIsLoading(false)
+    updateCookie()
   }
-
-  
 
   return (
     <div className={styles.container}>
@@ -37,10 +47,15 @@ export default function Home() {
           <li>
             <button className={styles.button} onClick={fetchToGetCookie} disabled={isLoading}>click to fetch Cookie</button>
           </li>
+        </ol>
+        <ul>
           <li>
             hint: {isFetched ? 'fetched!' : isLoading ? 'fetching' : 'please click button' }
           </li>
-        </ol>
+          <li>
+            delicious cookie from {SITE_B}: <pre className={styles.cookie}>{cookie || 'not yet get it!'}</pre>
+          </li>
+        </ul>
       </main>
     </div>
   )
