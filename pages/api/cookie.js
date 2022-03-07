@@ -38,6 +38,6 @@ const setHeaderForCORSWithCredentials = (response) => {
 export default function handler(request, response) {
   setHeaderForPreflight(request, response)
   setHeaderForCORSWithCredentials(response)
-  response.setHeader('set-cookie', `delicious=from_site_b_endpoint; path=/; secure; samesite=none; maxAge=${MAX_AGE_FOR_COOKIE}`)
+  response.setHeader('set-cookie', `delicious=from_site_a_endpoint; path=/; secure; samesite=none; maxAge=${MAX_AGE_FOR_COOKIE}`)
   response.status(200).json({result: 'cookie is delivered'})
 }
