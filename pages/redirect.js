@@ -2,30 +2,15 @@ import Head from 'next/head'
 import { useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { getDeliciousCookie } from '../utils'
-import { SITE_B, ENDPOINT } from '../constants'
+import { SITE_B, REDIRECT_POINT } from '../constants'
 
-export default function Home() {
-  const [isFetched, setIsFetched] = useState(false)
+export default function Redirect() {
   const [isLoading, setIsLoading] = useState(false)
   const [cookie] = useState(getDeliciousCookie)
-
   const fetchToGetCookie = async () => {
     setIsLoading(true)
-    try {
-      await fetch(ENDPOINT, {
-        mode: 'cors', 
-        credentials: 'include'
-      })
-      setIsFetched(true)
-      setIsLoading(false)
-      setTimeout(() => {
-        window.location = SITE_B
-      }, 10)
-    } catch(error) {
-      console.log(error)
-    }
+    window.location = REDIRECT_POINT
   }
-  
   return (
     <div className={styles.container}>
       <Head>
@@ -43,7 +28,7 @@ export default function Home() {
             cookie value: {cookie}
           </li>
           <li>
-            hint: {isFetched ? 'fetched!' : isLoading ? 'fetching' : 'please click button' }
+            hint: {isLoading ? 'fetching' : 'please click button' }
           </li>
         </ul>
       </main>
